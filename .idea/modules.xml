@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/OSUMap/OSUMap.iml" filepath="$PROJECT_DIR$/OSUMap/OSUMap.iml" />
+      <module fileurl="file://$PROJECT_DIR$/OSUMap/OSUMap-OSUMap.iml" filepath="$PROJECT_DIR$/OSUMap/OSUMap-OSUMap.iml" />
       <module fileurl="file://$PROJECT_DIR$/OSUMapProject.iml" filepath="$PROJECT_DIR$/OSUMapProject.iml" />
     </modules>
   </component>
