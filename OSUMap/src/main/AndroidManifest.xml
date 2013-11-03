@@ -15,12 +15,22 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name="com.jkalmeida.osuhack.MainActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.Light.NoTitleBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name="com.jkalmeida.osuhack.displayBasicInfoActivity"
+            android:label="@string/title_activity_display_basic_info"
+            android:theme="@android:style/Theme.Light.NoTitleBar"
+            android:parentActivityName="com.jkalmeida.osuhack.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.jkalmeida.osuhack.MainActivity" />
         </activity>
     </application>
 

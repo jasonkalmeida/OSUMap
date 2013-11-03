@@ -74,6 +74,7 @@ public class MainActivity extends FragmentActivity implements
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        System.out.println ("onCreate: error testing");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -362,5 +363,13 @@ public class MainActivity extends FragmentActivity implements
         GooglePlayServicesUtil.getErrorDialog(code, this,
                 REQUEST_CODE_RECOVER_PLAY_SERVICES).show();
     }
+    
+    /**
+     *
+     */
+    public void basicInfo(View view) {
+        Intent intent = new Intent(this, displayBasicInfoActivity.class);
 
+        startActivity(intent);
+    }
 }

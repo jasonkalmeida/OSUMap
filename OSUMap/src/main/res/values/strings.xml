@@ -4,5 +4,10 @@
     <string name="app_name">OSUMap</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="basic_info">Information</string>
+    <string name="restaurant">Restaurants</string>
+    <string name="events">Events</string>
+    <string name="bld_name">Building Name</string>
+    <string name="title_activity_display_basic_info">Basic Info</string>
 
 </resources>
