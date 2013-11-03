@@ -5,8 +5,10 @@ import android.app.ActionBar;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
+import android.content.SharedPreferences;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.SystemClock;
@@ -25,10 +27,13 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.location.LocationClient;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
 
 public class MainActivity extends FragmentActivity implements
         GooglePlayServicesClient.ConnectionCallbacks,
-        GooglePlayServicesClient.OnConnectionFailedListener {
+        GooglePlayServicesClient.OnConnectionFailedListener,
+        LocationListener {
 
     // Global constants
     /*
@@ -40,13 +45,35 @@ public class MainActivity extends FragmentActivity implements
     static final int REQUEST_CODE_RECOVER_PLAY_SERVICES = 1001;
 
 
+    // Milliseconds per second
+    private static final int MILLISECONDS_PER_SECOND = 1000;
+    // Update frequency in seconds
+    public static final int UPDATE_INTERVAL_IN_SECONDS = 5;
+    // Update frequency in milliseconds
+    private static final long UPDATE_INTERVAL =
+            MILLISECONDS_PER_SECOND * UPDATE_INTERVAL_IN_SECONDS;
+    // The fastest update frequency, in seconds
+    private static final int FASTEST_INTERVAL_IN_SECONDS = 1;
+    // A fast frequency ceiling in milliseconds
+    private static final long FASTEST_INTERVAL =
+            MILLISECONDS_PER_SECOND * FASTEST_INTERVAL_IN_SECONDS;
+
+
     // Global variable to hold the current
     Location mCurrentLocation;
     LocationClient mLocationClient;
+    boolean mUpdatesRequested;
+
+
+    // Define an object that holds accuracy and frequency parameters
+    LocationRequest mLocationRequest;
+
+    SharedPreferences mPrefs;
+    SharedPreferences.Editor mEditor;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        System.out.println ("onCreate: error testing");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -56,11 +83,57 @@ public class MainActivity extends FragmentActivity implements
                     .commit();
         }
 
+        // Open the shared preferences
+        mPrefs = getSharedPreferences("SharedPreferences",
+                Context.MODE_PRIVATE);
+        // Get a SharedPreferences editor
+        mEditor = mPrefs.edit();
         /*
          * Create a new location client, using the enclosing class to
          * handle callbacks.
          */
         mLocationClient = new LocationClient(this, this, this);
+        // Start with updates turned off
+        mUpdatesRequested = false;
+
+
+
+
+
+        // Create the LocationRequest object
+        mLocationRequest = LocationRequest.create();
+        // Use high accuracy
+        mLocationRequest.setPriority(
+                LocationRequest.PRIORITY_HIGH_ACCURACY);
+        // Set the update interval to 5 seconds
+        mLocationRequest.setInterval(UPDATE_INTERVAL);
+        // Set the fastest update interval to 1 second
+        mLocationRequest.setFastestInterval(FASTEST_INTERVAL);
+    }
+
+    @Override
+    protected void onPause() {
+        // Save the current setting for updates
+        mEditor.putBoolean("KEY_UPDATES_ON", mUpdatesRequested);
+        mEditor.commit();
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        /*
+         * Get any previous setting for location updates
+         * Gets "false" if an error occurs
+         */
+        if (mPrefs.contains("KEY_UPDATES_ON")) {
+            mUpdatesRequested =
+                    mPrefs.getBoolean("KEY_UPDATES_ON", false);
+
+            // Otherwise, turn off location updates
+        } else {
+            mEditor.putBoolean("KEY_UPDATES_ON", false);
+            mEditor.commit();
+        }
     }
 
     /*
@@ -79,8 +152,19 @@ public class MainActivity extends FragmentActivity implements
      */
     @Override
     protected void onStop() {
-        System.out.println ("onStop: error testing");
-        // Disconnecting the client invalidates it.
+        // If the client is connected
+        if (mLocationClient.isConnected()) {
+            /*
+             * Remove location updates for a listener.
+             * The current Activity is the listener, so
+             * the argument is "this".
+             */
+            mLocationClient.removeLocationUpdates(this);
+        }
+        /*
+         * After disconnect() is called, the client is
+         * considered "dead".
+         */
         mLocationClient.disconnect();
         super.onStop();
     }
@@ -199,12 +283,32 @@ public class MainActivity extends FragmentActivity implements
         // Display the connection status
         Toast.makeText(this, "Connected", Toast.LENGTH_SHORT).show();
 
-        //while (true) {
-            mCurrentLocation = mLocationClient.getLastLocation();
+        // If already requested, start periodic updates
+        if (mUpdatesRequested) {
+            mLocationClient.requestLocationUpdates(mLocationRequest, this);
+        }
 
-            Toast.makeText(this, "Location: " + mCurrentLocation, Toast.LENGTH_LONG).show();
+        mCurrentLocation = mLocationClient.getLastLocation();
+        System.out.printf("testing: " + mCurrentLocation);
+        Toast.makeText(this, mCurrentLocation.toString(), Toast.LENGTH_SHORT).show();
 
-            //SystemClock.sleep(1500);
+
+//        while (true) {
+//            System.out.printf("testing: changing location");
+//            mCurrentLocation = mLocationClient.getLastLocation();
+//            Toast.makeText(this, mCurrentLocation.toString(), Toast.LENGTH_SHORT).show();
+//            SystemClock.sleep(1500);
+//        }
+    }
+
+    // Define the callback method that receives location updates
+    @Override
+    public void onLocationChanged(Location location) {
+        // Report to the UI that the location was updated
+        String msg = "Updated Location: " +
+                Double.toString(location.getLatitude()) + "," +
+                Double.toString(location.getLongitude());
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
 
     /*
