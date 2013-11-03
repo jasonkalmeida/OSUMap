@@ -149,4 +149,12 @@ public class MainActivity extends FragmentActivity {
         }
     }
 
+    /**
+     *
+     */
+    public void basicInfo(View view) {
+        Intent intent = new Intent(this, displayBasicInfoActivity.class);
+
+        startActivity(intent);
+    }
 }
