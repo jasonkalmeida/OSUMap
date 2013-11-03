@@ -368,7 +368,8 @@ public class MainActivity extends FragmentActivity implements
      *
      */
     public void basicInfo(View view) {
-        Intent intent = new Intent(this, displayBasicInfoActivity.class);
+        Intent intent;
+        intent = new Intent(this, displayBasicInfoActivity.class);
 
         startActivity(intent);
     }
