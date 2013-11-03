@@ -3,6 +3,12 @@
     android:layout_height="fill_parent"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="30dp"
+        android:id="@+id/buildingName">
+    </View>
+
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -10,32 +16,125 @@
         android:text="@string/bld_name"
         android:textSize="40sp"
         android:id="@+id/textView"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true" />
+        android:gravity="left"
+        android:layout_below="@+id/buildingName"/>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="40dp"
+        android:layout_below="@+id/textView"
+        android:layout_alignParentLeft="true"
+        android:id="@+id/blank">
+    </View>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="6dp"
+        android:background="@android:color/darker_gray"
+        android:layout_below="@+id/blank"
+        android:id="@+id/grayLine">
+    </View>
+
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/buildingPicture"
+        android:background="@drawable/building"
+        android:layout_below="@+id/textView"
+        android:layout_alignParentRight="true">
+    </ImageView>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="30dp"
+        android:layout_below="@+id/grayLine"
+        android:layout_alignParentLeft="true"
+        android:id="@+id/blank1">
+    </View>
 
     <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/basic_info"
         android:id="@+id/button"
-        android:layout_below="@+id/textView"
+        android:background="@android:color/transparent"
+        android:textSize="30sp"
+        android:gravity="left"
+        android:onClick="basicInfo"
+        android:layout_below="@+id/blank1"
+        android:layout_alignParentLeft="true" />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="15dp"
+        android:layout_below="@+id/button"
         android:layout_alignParentLeft="true"
-        android:onClick="basicInfo"/>
+        android:id="@+id/blank2">
+    </View>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="3dp"
+        android:background="@android:color/holo_red_light"
+        android:layout_below="@+id/blank2"
+        android:id="@+id/redLine">
+    </View>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="15dp"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/redLine"
+        android:id="@+id/blank3">
+    </View>
 
     <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/restaurant"
         android:id="@+id/button2"
-        android:layout_below="@+id/button"
+        android:background="@android:color/transparent"
+        android:layout_below="@+id/blank3"
+        android:textSize="30sp"
+        android:gravity="left"
+        android:onClick="foodInfo"
         android:layout_alignParentLeft="true" />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="30dp"
+        android:layout_below="@+id/button2"
+        android:layout_alignParentLeft="true"
+        android:id="@+id/blank4">
+    </View>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="3dp"
+        android:background="@android:color/holo_red_light"
+        android:layout_below="@+id/blank4"
+        android:id="@+id/redLine1">
+    </View>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="15dp"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/redLine1"
+        android:id="@+id/blank5">
+    </View>
 
     <Button
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="fill_parent"
         android:text="@string/events"
         android:id="@+id/button3"
-        android:layout_below="@+id/button2"
+        android:background="@android:color/transparent"
+        android:layout_below="@+id/blank5"
+        android:textSize="30sp"
+        android:gravity="left"
+        android:onClick="eventInfo"
         android:layout_alignParentLeft="true" />
 
 </RelativeLayout>

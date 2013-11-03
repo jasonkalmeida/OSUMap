@@ -170,7 +170,6 @@ public class MainActivity extends FragmentActivity implements
         super.onStop();
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         
@@ -367,10 +366,32 @@ public class MainActivity extends FragmentActivity implements
     /**
      *
      */
+
+    /**
+     * Method to send to basic info
+     */
     public void basicInfo(View view) {
         Intent intent;
         intent = new Intent(this, displayBasicInfoActivity.class);
 
         startActivity(intent);
     }
+
+//    /**
+//     * Method to send to restaurants
+//     */
+//    public void foodInfo(View view) {
+//        Intent intent = new Intent(this, displayFoodInfoActivity.class);
+//
+//        startActivity(intent);
+//    }
+//
+//    /**
+//     * Method to send to events
+//     */
+//    public void eventInfo(View view){
+//        Intent intent = new Intent(this, displayEventInfoActivity.class);
+//
+//        startActivity(intent);
+//    }
 }
