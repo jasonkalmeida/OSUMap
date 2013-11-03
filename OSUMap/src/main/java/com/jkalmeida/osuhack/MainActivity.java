@@ -149,14 +149,4 @@ public class MainActivity extends FragmentActivity {
         }
     }
 
-    /**
-     * Called when user clicks the basic info button
-     */
-    public void basicInfo(View view) {
-        // New intent that will handle the runtime binding for basic info activity
-        Intent intent = new Intent(this, displayBasicInfoActivity.class);
-
-        // Start new activity
-        startActivity(intent);
-    }
 }

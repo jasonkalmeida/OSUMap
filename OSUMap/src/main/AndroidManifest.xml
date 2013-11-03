@@ -34,4 +34,7 @@
         </activity>
     </application>
 
+    <!-- Adding user permissions -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+
 </manifest>
